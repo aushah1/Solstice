@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Solstice - Web Player: Your Gateway to Music</title>
+    <link rel="stylesheet" href="Css/style.css" />
+    <link rel="stylesheet" href="Css/utility.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    <div class="container bg-black">
+      <div class="left">
+        <div class="close">
+          <img src="Svgs/close.svg" alt="close" />
+        </div>
+        <div class="home bg-grey">
+          <div class="logo">
+            <img width="230px" src="Solsticelogo.png" alt="logo" />
+          </div>
+          <ul>
+            <li><img src="Svgs/home.svg" alt="home" />Home</li>
+            <li><img src="Svgs/search.svg" alt="search" />Search</li>
+            <li></li>
+          </ul>
+        </div>
+        <div class="library bg-grey">
+          <div class="heading">
+            <img src="Svgs/library.svg" alt="Library" />
+            <h2>Your Library</h2>
+          </div>
+
+          <div class="songList">
+            <ul></ul>
+          </div>
+          <div class="footer">
+            <div>
+              <a href="https://www.spotify.com/in-en/legal/">
+                <span>Legal</span>
+              </a>
+            </div>
+            <div>
+              <a href="https://www.spotify.com/in-en/safetyandprivacy/">
+                <span>Safety &amp; Privacy Center</span>
+              </a>
+            </div>
+            <div>
+              <a href="https://www.spotify.com/in-en/legal/privacy-policy/">
+                <span>Privacy Policy</span>
+              </a>
+            </div>
+            <div>
+              <a href="https://www.spotify.com/in-en/legal/cookies-policy/">
+                <span>Cookies</span>
+              </a>
+            </div>
+            <div>
+              <a href="https://www.spotify.com/in-en/legal/privacy-policy/#s3">
+                <span>About Ads</span>
+              </a>
+            </div>
+            <div>
+              <a href="https://www.spotify.com/in-en/accessibility/">
+                <span>Accessibility</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="right bg-grey">
+        <div class="header">
+          <div class="nav">
+            <div class="hamburgerCont">
+              <img
+                width="40"
+                class="hamburger"
+                src="Svgs/hamburger.svg"
+                alt="hamburger" />
+
+              <img src="Svgs/left.svg" alt="left arrow" />
+              <img src="Svgs/right.svg" alt="right arrow" />
+            </div>
+          </div>
+          <div class="buttons">
+            <button class="signupbtn">Sign up</button>
+            <button class="loginbtn">Log in</button>
+          </div>
+        </div>
+        <div class="spotifyPlaylists">
+          <h1>Solstice Playlists</h1>
+          <div class="cardContainer"></div>
+
+          <div class="playbar">
+            <div class="seekbar">
+              <div class="circle"></div>
+            </div>
+
+            <div class="songinfo">
+              <div class="songname"></div>
+              <div class="songbuttons">
+                <img id="previous" src="Svgs/previous.svg" />
+                <img id="play" src="Svgs/play.svg" alt="" />
+                <img id="next" src="Svgs/next.svg" alt="" />
+              </div>
+              <div class="timevol">
+                <div class="songtime"></div>
+                <div class="volume">
+                  <img width="28" src="Svgs/volume.svg" alt="volume" />
+                  <div class="range">
+                    <input type="range" name="volume" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/script.js"></script>
+  </body>
+</html>
