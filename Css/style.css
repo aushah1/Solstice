@@ -338,7 +338,7 @@ body {
     position: absolute;
     left: -130%;
     transition: all 0.3s;
-    z-index: 1;
+    z-index: 10;
     width: 373px;
     background-color: black;
     padding: 0;

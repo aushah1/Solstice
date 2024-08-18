@@ -17,6 +17,7 @@ function secondsToMinutesSeconds(seconds) {
 
   return `${formattedMinutes}:${formattedSeconds}`;
 }
+
 async function getSongs(folder) {
   currFolder = folder;
   let a = await fetch(`http://127.0.0.1:3003/${folder}/`);
@@ -30,7 +31,7 @@ async function getSongs(folder) {
     const element = as[index];
 
     if (element.href.endsWith(".mp3")) {
-      songs.push(element.href.split(`/${folder}/`)[1]);
+      songs.push(element.href.split(`/${folder}/`)[1].replace(".mp3", ""));
     }
   }
 
@@ -41,7 +42,6 @@ async function getSongs(folder) {
     songUL.innerHTML += `<li> <img src="Svgs/music.svg" alt="music" />
         <div class="info">
           <div> ${song.replaceAll("%20", " ")}</div>
-          <div>harry</div>
         </div>
         <div class="playnow" >
           <span>Play Now</span>
@@ -65,7 +65,7 @@ async function getSongs(folder) {
 
 const playSong = (track, pause = false) => {
   // let audio = new Audio("/songs/" + track);
-  currentSong.src = `/${currFolder}/` + track;
+  currentSong.src = `/${currFolder}/` + track + ".mp3";
   if (!pause) {
     currentSong.play();
     play.src = "Svgs/pause.svg";
