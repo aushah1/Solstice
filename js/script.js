@@ -1,5 +1,4 @@
-console.log(`Let's write some JavaScript`);
-
+let address = "http://127.0.0.1:3000";
 let currentSong = new Audio();
 let songs;
 let currFolder;
@@ -20,7 +19,7 @@ function secondsToMinutesSeconds(seconds) {
 
 async function getSongs(folder) {
   currFolder = folder;
-  let a = await fetch(`http://127.0.0.1:3000/${folder}/`);
+  let a = await fetch(`${address}/${folder}/`);
   let response = await a.text();
 
   let div = document.createElement("div");
@@ -46,12 +45,10 @@ async function getSongs(folder) {
         <div class="playnow" >
           <span>Play Now</span>
           <img src="Svgs/play.svg" alt="play" />
-        </div> </li>
-        `;
+        </div> </li>`;
   }
 
   // Attach an event listener to each song
-
   Array.from(
     document.querySelector(".songList").getElementsByTagName("li")
   ).forEach((e) => {
@@ -64,7 +61,6 @@ async function getSongs(folder) {
 }
 
 const playSong = (track, pause = false) => {
-  // let audio = new Audio("/songs/" + track);
   currentSong.src = `/${currFolder}/` + track + ".mp3";
   if (!pause) {
     currentSong.play();
@@ -76,7 +72,7 @@ const playSong = (track, pause = false) => {
 };
 
 async function displayAlbums() {
-  let a = await fetch(`http://127.0.0.1:3000/songs/`);
+  let a = await fetch(`${address}/songs/`);
   let response = await a.text();
   let div = document.createElement("div");
   div.innerHTML = response;
@@ -90,41 +86,37 @@ async function displayAlbums() {
       let folder = e.href.split("/").slice(-2)[0];
 
       // get the metadata of the folder
-      let a = await fetch(`http://127.0.0.1:3000/songs/${folder}/info.json`);
+      let a = await fetch(`${address}/songs/${folder}/info.json`);
       let response = await a.json();
-      cardContainer.innerHTML += `            <div data-folder="${folder}" class="card">
+      cardContainer.innerHTML += `<div data-folder="${folder}" class="card">
               <div class="play">
                 <i class="fa-solid fa-play" style="color: #000"></i>
               </div>
-              <img
-                src="/songs/${folder}/cover.jpg"s
-                alt="" />
+              <img src="/songs/${folder}/cover.jpg" alt="" />
               <h2>${response.title}</h2>
               <p>${response.description}</p>
             </div>`;
     }
   }
 
-  // load the playlist whenever card is clicked
+  // Load the playlist whenever a card is clicked
   Array.from(document.getElementsByClassName("card")).forEach((e) => {
     e.addEventListener("click", async (item) => {
       songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`);
-
       playSong(songs[0]);
     });
   });
 }
-async function main() {
-  // get the list of all songs
 
+async function main() {
+  // Get the list of all songs
   await getSongs(`songs/BollywoodAcoustic`);
   playSong(songs[0], true);
 
-  //display all the albums on the page
+  // Display all the albums on the page
   await displayAlbums();
 
-  // attach event listner to  play
-
+  // Attach event listener to play
   document.getElementById("play").addEventListener("click", () => {
     if (currentSong.paused) {
       currentSong.play();
@@ -135,25 +127,38 @@ async function main() {
     }
   });
 
-  // add an event listener to previous
+  // Add an event listener to previous
   document.getElementById("previous").addEventListener("click", () => {
     currentSong.pause();
-    let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
+    let currentSrc = currentSong.src
+      .split("/")
+      .slice(-1)[0]
+      .replace(".mp3", "");
+    let index = songs.indexOf(currentSrc);
+
     if (index - 1 >= 0) {
       playSong(songs[index - 1]);
     }
   });
-  // add an event listener to next
 
+  // Add an event listener to next
   document.getElementById("next").addEventListener("click", () => {
     currentSong.pause();
-    let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
+    let currentSrc = currentSong.src
+      .split("/")
+      .slice(-1)[0]
+      .replace(".mp3", "");
+    let index = songs.indexOf(currentSrc);
+
     if (index + 1 < songs.length) {
       playSong(songs[index + 1]);
+    } else {
+      // Optionally, loop back to the first song or handle end of playlist
+      playSong(songs[0]);
     }
   });
 
-  // listen for time uptade event
+  // Listen for time update event
   currentSong.addEventListener("timeupdate", () => {
     document.querySelector(".songtime").innerHTML = `${secondsToMinutesSeconds(
       currentSong.currentTime
@@ -162,25 +167,24 @@ async function main() {
       (currentSong.currentTime / currentSong.duration) * 100 + "%";
   });
 
-  // add an event listener to seek bar
+  // Add an event listener to the seek bar
   document.querySelector(".seekbar").addEventListener("click", (e) => {
     let percent = (e.offsetX / e.target.getBoundingClientRect().width) * 100;
     document.querySelector(".circle").style.left = percent + "%";
-
     currentSong.currentTime = (currentSong.duration * percent) / 100;
   });
 
-  // add an event listner for hamburger
+  // Add an event listener for the hamburger menu
   document.querySelector(".hamburger").addEventListener("click", () => {
     document.querySelector(".left").style.left = "0";
   });
-  // add an event listner for close
+
+  // Add an event listener for the close button
   document.querySelector(".close").addEventListener("click", () => {
     document.querySelector(".left").style.left = "-120%";
   });
 
-  // add an event to volume
-
+  // Add an event listener for volume control
   document
     .querySelector(".range")
     .getElementsByTagName("input")[0]
@@ -193,7 +197,7 @@ async function main() {
       }
     });
 
-  // add event listener to mute the track
+  // Add an event listener to mute/unmute the track
   document.querySelector(".volume>img").addEventListener("click", (e) => {
     if (e.target.src.includes("Svgs/volume.svg")) {
       e.target.src = e.target.src.replace("Svgs/volume.svg", "Svgs/mute.svg");
